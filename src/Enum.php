@@ -119,12 +119,28 @@ abstract class Enum
     public static function toArray()
     {
         $class = get_called_class();
-        if (!array_key_exists($class, static::$cache)) {
-            $reflection            = new \ReflectionClass($class);
-            static::$cache[$class] = $reflection->getConstants();
+        if (!array_key_exists($class, self::$cache)) {
+            $reflection = new \ReflectionClass($class);
+
+            foreach ($reflection->getReflectionConstants() as $key => $constant) {
+                $comment = $constant->getDocComment();
+                if ($comment) {
+                    preg_match('~.*@enum\s(?P<behavior>\w+)(?P<params>(?>\s\w+)*)~ui',$comment,$matches);
+
+                    $methodName = strtolower($matches['behavior']) . 'Behavior';
+
+                    if ($reflection->hasMethod($methodName)) {
+                        if (static::$methodName(trim($matches['params']))) {
+                            continue;
+                        }
+                    };
+                }
+
+                self::$cache[$class][$key] = $constant->getValue();
+            }
         }
 
-        return static::$cache[$class];
+        return self::$cache[$class];
     }
 
     /**
@@ -182,5 +198,10 @@ abstract class Enum
         }
 
         throw new \BadMethodCallException("No static method or enum constant '$name' in class " . get_called_class());
+    }
+
+    protected static function noexportBehavior($params)
+    {
+        return true;
     }
 }
