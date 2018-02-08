@@ -18,6 +18,11 @@ namespace MyCLabs\Enum;
 abstract class Enum
 {
     /**
+     * @enum exclude
+     */
+    private const BEHAVIOR_SUFFIX = 'EnumBehavior';
+
+    /**
      * Enum value
      *
      * @var mixed
@@ -125,18 +130,15 @@ abstract class Enum
             foreach ($reflection->getReflectionConstants() as $key => $constant) {
                 $comment = $constant->getDocComment();
                 if ($comment) {
-
-                    preg_match_all('~@enum\s(?P<behavior>\w+)(?>\[(?P<params>.*)\](?>$|\s))?~ui',$comment,$matches);
+                    preg_match_all('~@enum\s+(?P<behavior>\w+)(?>\[(?P<params>.*)\])?(?:$|\s)~ui',$comment,$matches, \PREG_SET_ORDER);
 
                     $exclude = false;
 
-                    foreach ($matches['behavior'] as $index => $behavior) {
-                        $methodName = $behavior . self::BEHAVIOR_SUFFIX;
+                    foreach ($matches as $behavior) {
+                        $methodName = $behavior['behavior'] . self::BEHAVIOR_SUFFIX;
 
-                        if ($reflection->hasMethod($methodName)) {
-                            if (static::$methodName(trim($matches['params'][$index]))) {
-                                $exclude = true;
-                            }
+                        if ($reflection->hasMethod($methodName) && true === static::$methodName(trim($behavior['params']))) {
+                            $exclude = true;
                         };
                     }
 
