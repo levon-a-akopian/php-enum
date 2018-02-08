@@ -125,14 +125,23 @@ abstract class Enum
             foreach ($reflection->getReflectionConstants() as $key => $constant) {
                 $comment = $constant->getDocComment();
                 if ($comment) {
-                    preg_match('~.*@enum\s(?P<behavior>\w+)(?P<params>(?>\s\w+)*)~ui',$comment,$matches);
 
-                    $methodName = strtolower($matches['behavior']) . 'Behavior';
+                    preg_match_all('~@enum\s(?P<behavior>\w+)(?>\[(?P<params>.*)\](?>$|\s))?~ui',$comment,$matches);
 
-                    if ($reflection->hasMethod($methodName)) {
-                        if (static::$methodName(trim($matches['params']))) {
-                            continue;
-                        }
+                    $exclude = false;
+
+                    foreach ($matches['behavior'] as $index => $behavior) {
+                        $methodName = $behavior . self::BEHAVIOR_SUFFIX;
+
+                        if ($reflection->hasMethod($methodName)) {
+                            if (static::$methodName(trim($matches['params'][$index]))) {
+                                $exclude = true;
+                            }
+                        };
+                    }
+
+                    if ($exclude === true) {
+                        continue;
                     };
                 }
 
