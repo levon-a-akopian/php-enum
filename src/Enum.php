@@ -209,7 +209,7 @@ abstract class Enum
         throw new \BadMethodCallException("No static method or enum constant '$name' in class " . get_called_class());
     }
 
-    protected static function noexportBehavior($params)
+    protected static function excludeEnumBehavior($params)
     {
         return true;
     }
