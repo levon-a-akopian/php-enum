@@ -20,13 +20,13 @@ This Enum class is not intended to replace class constants, but only to be used 
 ## Installation
 
 ```
-composer require myclabs/php-enum
+composer require levon-a-akopian/php-enum
 ```
 
 ## Declaration
 
 ```php
-use MyCLabs\Enum\Enum;
+use SJLAkopian\Enum\Enum;
 
 /**
  * Action enum

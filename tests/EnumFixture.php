@@ -1,12 +1,12 @@
 <?php
 /**
- * @link    http://github.com/myclabs/php-enum
+ * @link    http://github.com/levon-a-akopian/php-enum
  * @license http://www.opensource.org/licenses/mit-license.php MIT (see the LICENSE file)
  */
 
-namespace MyCLabs\Tests\Enum;
+namespace SJLAkopian\Tests\Enum;
 
-use MyCLabs\Enum\Enum;
+use SJLAkopian\Enum\Enum;
 
 /**
  * Class EnumFixture

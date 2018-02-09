@@ -1,10 +1,10 @@
 <?php
 /**
- * @link    http://github.com/myclabs/php-enum
+ * @link    http://github.com/levon-a-akopian/php-enum
  * @license http://www.opensource.org/licenses/mit-license.php MIT (see the LICENSE file)
  */
 
-namespace MyCLabs\Tests\Enum;
+namespace SJLAkopian\Tests\Enum;
 
 /**
  * @author Matthieu Napoli <matthieu@mnapoli.fr>
@@ -41,7 +41,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider invalidValueProvider
      * @expectedException UnexpectedValueException
-     * @expectedExceptionMessage is not part of the enum MyCLabs\Tests\Enum\EnumFixture
+     * @expectedExceptionMessage is not part of the enum SJLAkopian\Tests\Enum\EnumFixture
      */
     public function testCreatingEnumWithInvalidValue($value)
     {
@@ -146,7 +146,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     /**
      * @expectedException \BadMethodCallException
      * @expectedExceptionMessage No static method or enum constant 'UNKNOWN' in class
-     *                           UnitTest\MyCLabs\Enum\Enum\EnumFixture
+     *                           UnitTest\SJLAkopian\Enum\Enum\EnumFixture
      */
     public function testBadStaticAccess()
     {
@@ -191,7 +191,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
 
     /**
      * search()
-     * @see https://github.com/myclabs/php-enum/issues/13
+     * @see https://github.com/levon-a-akopian/php-enum/issues/13
      * @dataProvider searchProvider
      */
     public function testSearch($value, $expected)
