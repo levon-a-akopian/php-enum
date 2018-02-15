@@ -137,7 +137,7 @@ abstract class Enum
                     foreach ($matches as $behavior) {
                         $methodName = $behavior['behavior'] . self::BEHAVIOR_SUFFIX;
 
-                        if ($reflection->hasMethod($methodName) && true === static::$methodName(trim($behavior['params']))) {
+                        if ($reflection->hasMethod($methodName) && true === static::$methodName(trim($behavior['params'] ?? ''))) {
                             $exclude = true;
                         };
                     }
