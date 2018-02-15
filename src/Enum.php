@@ -127,7 +127,7 @@ abstract class Enum
         if (!array_key_exists($class, self::$cache)) {
             $reflection = new \ReflectionClass($class);
 
-            foreach ($reflection->getReflectionConstants() as $key => $constant) {
+            foreach ($reflection->getReflectionConstants() as $constant) {
                 $comment = $constant->getDocComment();
                 if ($comment) {
                     preg_match_all('~@enum\s+(?P<behavior>\w+)(?>\[(?P<params>.*)\])?(?:$|\s)~ui',$comment,$matches, \PREG_SET_ORDER);
@@ -147,7 +147,7 @@ abstract class Enum
                     };
                 }
 
-                self::$cache[$class][$key] = $constant->getValue();
+                self::$cache[$class][$constant->name] = $constant->getValue();
             }
         }
 
